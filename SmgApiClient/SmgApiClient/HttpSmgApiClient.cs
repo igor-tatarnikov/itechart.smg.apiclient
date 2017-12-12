@@ -140,7 +140,7 @@ namespace SmgApiClient
             return response.Profiles.Select(x => MappingManager.Map(x)).ToList();
         }
 
-        public async Task<SmgFullProfile> GetEmployeeDetails(int employeeId)
+        public async Task<SmgFullProfile> GetEmployeeDetailsAsync(int employeeId)
         {
             var parameters = new Dictionary<string, string>
             {
@@ -159,9 +159,28 @@ namespace SmgApiClient
             return MappingManager.Map(response.Profile);
         }
 
-        public SmgFullProfile GetEmployeeDetailsUpdated(int profileId, DateTime startDate)
+        public async Task<SmgFullProfile> GetEmployeeDetailsUpdatedAsync(int employeeId, DateTime? startDate = null)
         {
-            throw new NotImplementedException();
+            var parameters = new Dictionary<string, string>
+            {
+                { "profileId", employeeId.ToString() }
+            };
+
+            if (startDate.HasValue)
+            {
+                parameters.Add("updatedDate", startDate.Value.ToShortDateString());
+            }
+
+            var response = await Get<GetEmployeeDetailsResponse>(
+                "GetEmployeeDetailsUpdated",
+                parameters);
+
+            if (response == null || response.Profile == null)
+            {
+                return null;
+            }
+
+            return MappingManager.Map(response.Profile);
         }
 
         #endregion
