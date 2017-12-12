@@ -112,17 +112,40 @@ namespace SmgApiClient
             return response.Profiles.Select(x => MappingManager.Map(x)).ToList();
         }
 
+        public async Task<IEnumerable<SmgShortProfile>> GetEmployeesByDepartmentUpdatedAsync(
+            int departmentId,
+            bool showActiveOnly = true,
+            DateTime? startDate = null)
+        {
+            var parameters = new Dictionary<string, string>
+            {
+                { "departmentId", departmentId.ToString() },
+                { "initialRequest", showActiveOnly.ToString().ToLower() }
+            };
+
+            if (startDate.HasValue)
+            {
+                parameters.Add("updatedDate", startDate.Value.ToShortDateString());
+            }
+
+            var response = await Get<GetEmployeesByDeptIdResponse>(
+                "GetEmployeesByDeptIdUpdated",
+                parameters);
+
+            if (response == null || response.Profiles == null)
+            {
+                return null;
+            }
+
+            return response.Profiles.Select(x => MappingManager.Map(x)).ToList();
+        }
+
         public ProfileFullWS GetEmployeeDetails(int profileId)
         {
             throw new NotImplementedException();
         }
 
         public ProfileFullWS GetEmployeeDetailsUpdated(int profileId, DateTime startDate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<SmgShortProfile> GetEmployeesByDeptIdUpdated(int departmentId, bool showActiveOnly = true, DateTime? startDate = null)
         {
             throw new NotImplementedException();
         }

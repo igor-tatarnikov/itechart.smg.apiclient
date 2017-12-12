@@ -17,7 +17,10 @@ namespace SmgApiClient.Interfaces
 
         Task<IEnumerable<SmgShortProfile>> GetEmployeesByDeptartmentAsync(int departmentId);
 
-        IEnumerable<SmgShortProfile> GetEmployeesByDeptIdUpdated(int departmentId, bool showActiveOnly = true, DateTime? startDate = null);
+        Task<IEnumerable<SmgShortProfile>> GetEmployeesByDepartmentUpdatedAsync(
+            int departmentId,
+            bool showActiveOnly = true,
+            DateTime? startDate = null);
 
         ProfileFullWS GetEmployeeDetails(int profileId);
 
