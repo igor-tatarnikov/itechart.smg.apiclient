@@ -26,6 +26,15 @@ namespace SmgApiClient
             _sessionManager = new SessionManager(login, password);
         }
 
+        public HttpSmgApiClient(
+            string login,
+            string password,
+            string apiUrl)
+            : this(login, password)
+        {
+            RequestManager.SetCustomApiUrl(apiUrl);
+        }
+
         #endregion
 
         #region ISmgApiClient Implementation
@@ -44,8 +53,10 @@ namespace SmgApiClient
 
         public async Task<IEnumerable<SmgDepartment>> GetAllDepartmentsUpdatedAsync(DateTime startDate)
         {
-            var parameters = new Dictionary<string, string>();
-            parameters.Add("updatedDate", startDate.ToShortDateString());
+            var parameters = new Dictionary<string, string>
+            {
+                { "updatedDate", startDate.ToShortDateString() }
+            };
 
             var response = await Get<GetAllDepartmentsResponse>(
                 "GetAllDepartmentsUpdated",
@@ -73,8 +84,10 @@ namespace SmgApiClient
 
         public async Task<IEnumerable<SmgShortProfile>> GetEmployeeShortInfoAsync(bool showActiveOnly = true, DateTime? startDate = null)
         {
-            var parameters = new Dictionary<string, string>();
-            parameters.Add("initialRequest", showActiveOnly.ToString().ToLower());
+            var parameters = new Dictionary<string, string>
+            {
+                { "initialRequest", showActiveOnly.ToString().ToLower() }
+            };
 
             if (startDate.HasValue)
             {
