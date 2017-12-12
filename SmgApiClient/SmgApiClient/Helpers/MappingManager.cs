@@ -32,5 +32,18 @@ namespace SmgApiClient
                 IsEnabled = shortProfileContainer.IsEnabled
             };
         }
+
+        public static SmgShortProfile Map(ProfileExtraShortWS extraShortProfileContainer)
+        {
+            return new SmgShortProfile
+            {
+                Id = extraShortProfileContainer.ProfileId,
+                FirstName = extraShortProfileContainer.FirstName,
+                LastName = extraShortProfileContainer.LastName,
+                FirstNameEng = extraShortProfileContainer.FirstNameEng,
+                LastNameEng = extraShortProfileContainer.LastNameEng,
+                IsEnabled = extraShortProfileContainer.IsEnabled
+            };
+        }
     }
 }

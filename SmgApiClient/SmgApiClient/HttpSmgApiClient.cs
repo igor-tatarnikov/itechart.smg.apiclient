@@ -71,6 +71,28 @@ namespace SmgApiClient
             return response.Profiles.Select(x => MappingManager.Map(x)).ToList();
         }
 
+        public async Task<IEnumerable<SmgShortProfile>> GetEmployeeShortInfoAsync(bool showActiveOnly = true, DateTime? startDate = null)
+        {
+            var parameters = new Dictionary<string, string>();
+            parameters.Add("initialRequest", showActiveOnly.ToString().ToLower());
+
+            if (startDate.HasValue)
+            {
+                parameters.Add("updatedDate", startDate.Value.ToShortDateString());
+            }
+
+            var response = await Get<GetEmployeesShortInfoResponse>(
+                "GetEmployeeShortInfo",
+                parameters);
+
+            if (response == null || response.Profiles == null)
+            {
+                return null;
+            }
+
+            return response.Profiles.Select(x => MappingManager.Map(x)).ToList();
+        }
+
         public ProfileFullWS GetEmployeeDetails(int profileId)
         {
             throw new NotImplementedException();
@@ -87,11 +109,6 @@ namespace SmgApiClient
         }
 
         public IEnumerable<SmgShortProfile> GetEmployeesByDeptIdUpdated(int departmentId, bool showActiveOnly = true, DateTime? startDate = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<ProfileExtraShortWS> GetEmployeeShortInfo(bool showActiveOnly = true, DateTime? startDate = null)
         {
             throw new NotImplementedException();
         }
