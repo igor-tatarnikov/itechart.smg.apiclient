@@ -140,12 +140,26 @@ namespace SmgApiClient
             return response.Profiles.Select(x => MappingManager.Map(x)).ToList();
         }
 
-        public ProfileFullWS GetEmployeeDetails(int profileId)
+        public async Task<SmgFullProfile> GetEmployeeDetails(int employeeId)
         {
-            throw new NotImplementedException();
+            var parameters = new Dictionary<string, string>
+            {
+                { "profileId", employeeId.ToString() }
+            };
+
+            var response = await Get<GetEmployeeDetailsResponse>(
+                "GetEmployeeDetails",
+                parameters);
+
+            if (response == null || response.Profile == null)
+            {
+                return null;
+            }
+
+            return MappingManager.Map(response.Profile);
         }
 
-        public ProfileFullWS GetEmployeeDetailsUpdated(int profileId, DateTime startDate)
+        public SmgFullProfile GetEmployeeDetailsUpdated(int profileId, DateTime startDate)
         {
             throw new NotImplementedException();
         }

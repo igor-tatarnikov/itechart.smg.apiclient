@@ -45,5 +45,28 @@ namespace SmgApiClient
                 IsEnabled = extraShortProfileContainer.IsEnabled
             };
         }
+
+        public static SmgFullProfile Map(ProfileFullWS profileContainer)
+        {
+            return new SmgFullProfile
+            {
+                Id = profileContainer.ProfileId,
+                FirstName = profileContainer.FirstName,
+                LastName = profileContainer.LastName,
+                FirstNameEng = profileContainer.FirstNameEng,
+                LastNameEng = profileContainer.LastNameEng,
+                DepartmentId = profileContainer.DeptId,
+                Room = profileContainer.Room,
+                PhotoUrl = profileContainer.Image,
+                IsEnabled = profileContainer.IsEnabled,
+                Rank = profileContainer.Rank,
+                MiddleName = profileContainer.MiddleName,
+                Birthday = profileContainer.Birthday,
+                Skype = profileContainer.Skype,
+                Phone = profileContainer.Phone,
+                DomainName = profileContainer.DomenName,
+                Email = profileContainer.Email
+            };
+        }
     }
 }

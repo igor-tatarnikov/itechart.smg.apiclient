@@ -22,8 +22,8 @@ namespace SmgApiClient.Interfaces
             bool showActiveOnly = true,
             DateTime? startDate = null);
 
-        ProfileFullWS GetEmployeeDetails(int profileId);
+        Task<SmgFullProfile> GetEmployeeDetails(int employeeId);
 
-        ProfileFullWS GetEmployeeDetailsUpdated(int profileId, DateTime startDate);
+        SmgFullProfile GetEmployeeDetailsUpdated(int profileId, DateTime startDate);
     }
 }
